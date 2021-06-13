@@ -9,6 +9,7 @@ import {
   FlatList,
   Dimensions,
   Image,
+  KeyboardAvoidingView,
 } from 'react-native';
 import firebase from 'firebase';
 import styles from '../constants/styles';
@@ -114,33 +115,35 @@ export default class ChatScreen extends Component {
     let {height, width} = Dimensions.get('window');
     return (
       <SafeAreaView>
-        <FlatList
-          style={{padding: 10, height: height * 0.8}}
-          data={this.state.messageList}
-          renderItem={this.renderRow}
-          keyExtractor={(item, index) => index.toString()}
-        />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginHorizontal: 5,
-          }}>
-          <TextInput
-            style={styles.input}
-            value={this.state.textMessage}
-            placeholder="type message here..."
-            onChangeText={this.handleChange('textMessage')}
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={80}>
+          <FlatList
+            style={{padding: 10, height: height * 0.8}}
+            data={this.state.messageList}
+            renderItem={this.renderRow}
+            keyExtractor={(item, index) => index.toString()}
           />
-          <TouchableOpacity
-            onPress={this.sendMessage}
-            style={{paddingBottom: 10, marginLeft: 5}}>
-            <Image
-              source={require('../images/send-button.png')}
-              style={{width: 32, height: 32, marginRight: 5, marginLeft: 5}}
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginHorizontal: 5,
+            }}>
+            <TextInput
+              style={styles.input}
+              value={this.state.textMessage}
+              placeholder="type message here..."
+              onChangeText={this.handleChange('textMessage')}
             />
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              onPress={this.sendMessage}
+              style={{paddingBottom: 10, marginLeft: 5}}>
+              <Image
+                source={require('../images/send-button.png')}
+                style={{width: 32, height: 32, marginRight: 5, marginLeft: 5}}
+              />
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     );
   }
